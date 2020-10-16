@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1043429927542",
+    "firebase_url": "https://bulletin-board-51735.firebaseio.com",
+    "project_id": "bulletin-board-51735",
+    "storage_bucket": "bulletin-board-51735.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043429927542:android:c8329449a6ce3d7909cd57",
+        "android_client_info": {
+          "package_name": "mail.technopark.bulletin_board"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1043429927542-7ljmbnics5c4icftb3la6609gv9f0buc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCsYEo4vaGRLNw9z0Qh1BM8LwDaU0enzE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1043429927542-7ljmbnics5c4icftb3la6609gv9f0buc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
