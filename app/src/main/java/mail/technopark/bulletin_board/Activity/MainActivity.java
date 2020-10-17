@@ -1,8 +1,10 @@
-package mail.technopark.bulletin_board;
+package mail.technopark.bulletin_board.Activity;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import mail.technopark.bulletin_board.R;
 
 public class MainActivity extends AppCompatActivity {
 
