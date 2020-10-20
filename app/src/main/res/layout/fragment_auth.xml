@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".firebase.authentication.AuthFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_margin="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/login" />
+
+        <EditText
+            android:id="@+id/login_et"
+            android:layout_width="match_parent"
+            android:textSize="20sp"
+            android:inputType="textEmailAddress"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_margin="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/password" />
+
+        <EditText
+            android:id="@+id/password_et"
+            android:layout_width="match_parent"
+            android:textSize="20sp"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/enter_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="20sp"
+        android:layout_marginBottom="30dp"
+        android:text="@string/enter" />
+
+    <Button
+        android:id="@+id/register_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="20sp"
+        android:layout_marginBottom="30dp"
+        android:text="@string/register" />
+
+    <TextView
+        android:id="@+id/restore_tv"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:text="@string/restore_password"
+        android:textSize="20sp"/>
+</LinearLayout>

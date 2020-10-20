@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Bulletin-board</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="enter">Войти</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="surname">Фамилия</string>
+    <string name="name">Имя</string>
+    <string name="email">Почта МГТУ</string>
+    <string name="phone">Телефон</string>
+    <string name="logout">Выйти</string>
+    <string name="restore_password">Восстановить пароль</string>
 </resources>
