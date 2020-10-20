@@ -7,11 +7,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -46,7 +47,7 @@ public class FirebaseHelper { // Class for Firebase methods
 
     public void auth(String login, String password){ // Auth method
         if (login.isEmpty() || password.isEmpty()) Toast.makeText(context, "Введите логин и пароль", Toast.LENGTH_SHORT).show();
-        mAuth.signInWithEmailAndPassword(login, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        else mAuth.signInWithEmailAndPassword(login, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) goToBulletinFragment(); // When task complete successfully the BulletinFragment will open
@@ -77,13 +78,26 @@ public class FirebaseHelper { // Class for Firebase methods
                     Objects.requireNonNull(fbUser).sendEmailVerification(); // Email verification (Link)
                     String userId = fbUser.getUid();
 
-                    DocumentReference ref = mStore.collection("users").document(userId);
                     Map<String, Object> user = new HashMap<>();
                     user.put("surname", surname);
                     user.put("name", name);
                     user.put("email", email);
                     user.put("phone", phone);
-                    ref.set(user);
+
+                    mStore.collection("users").document(userId)
+                            .set(user)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(context, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(context, "Ошибка: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
                     goToBulletinFragment();
                 }

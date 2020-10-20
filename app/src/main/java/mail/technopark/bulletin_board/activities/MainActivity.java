@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
                 fragmentManager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
             finish();
+        } else {
+            super.onBackPressed();
         }
     }
 }
