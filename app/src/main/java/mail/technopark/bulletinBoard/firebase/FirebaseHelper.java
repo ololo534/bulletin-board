@@ -1,4 +1,4 @@
-package mail.technopark.bulletin_board.firebase;
+package mail.technopark.bulletinBoard.firebase;
 
 import android.app.FragmentManager;
 import android.content.Context;
@@ -21,8 +21,8 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import mail.technopark.bulletin_board.R;
-import mail.technopark.bulletin_board.main_bulletin_board.BulletinFragment;
+import mail.technopark.bulletinBoard.R;
+import mail.technopark.bulletinBoard.main_bulletin_board.BulletinFragment;
 
 public class FirebaseHelper { // Class for Firebase methods
     private final FirebaseAuth mAuth;

@@ -1,4 +1,4 @@
-package mail.technopark.bulletin_board.main_bulletin_board;
+package mail.technopark.bulletinBoard.main_bulletin_board;
 
 import android.os.Bundle;
 import android.app.Fragment;
@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import mail.technopark.bulletin_board.R;
-import mail.technopark.bulletin_board.firebase.FirebaseHelper;
-import mail.technopark.bulletin_board.firebase.authentication.AuthFragment;
+import mail.technopark.bulletinBoard.R;
+import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
+import mail.technopark.bulletinBoard.firebase.authentication.AuthFragment;
 
 public class BulletinFragment extends Fragment {
     private FirebaseHelper helper;

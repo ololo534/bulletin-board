@@ -1,4 +1,4 @@
-package mail.technopark.bulletin_board.firebase.authentication;
+package mail.technopark.bulletinBoard.firebase.authentication;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,9 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import mail.technopark.bulletin_board.R;
-import mail.technopark.bulletin_board.firebase.FirebaseHelper;
-import mail.technopark.bulletin_board.firebase.registration.RegisterFragment;
+import mail.technopark.bulletinBoard.R;
+import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
+import mail.technopark.bulletinBoard.firebase.registration.RegisterFragment;
 
 public class AuthFragment extends Fragment {
 
