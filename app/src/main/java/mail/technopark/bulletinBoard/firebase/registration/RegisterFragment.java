@@ -1,4 +1,4 @@
-package mail.technopark.bulletin_board.firebase.registration;
+package mail.technopark.bulletinBoard.firebase.registration;
 
 import android.os.Bundle;
 
@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import mail.technopark.bulletin_board.R;
-import mail.technopark.bulletin_board.firebase.FirebaseHelper;
+import mail.technopark.bulletinBoard.R;
+import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
 
 public class RegisterFragment extends Fragment {
     FirebaseHelper helper;

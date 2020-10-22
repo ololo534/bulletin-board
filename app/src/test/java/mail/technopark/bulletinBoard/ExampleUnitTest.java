@@ -1,4 +1,4 @@
-package mail.technopark.bulletin_board;
+package mail.technopark.bulletinBoard;
 
 import org.junit.Test;
 

@@ -1,11 +1,11 @@
-package mail.technopark.bulletin_board.activities;
+package mail.technopark.bulletinBoard.activities;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
-import mail.technopark.bulletin_board.firebase.authentication.AuthFragment;
-import mail.technopark.bulletin_board.R;
+import mail.technopark.bulletinBoard.firebase.authentication.AuthFragment;
+import mail.technopark.bulletinBoard.R;
 
 public class MainActivity extends AppCompatActivity {
 

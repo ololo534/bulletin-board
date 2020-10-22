@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="mail.technopark.bulletin_board">
+    package="mail.technopark.bulletinBoard">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         android:fullBackupContent="@xml/backup_descriptor">
         <activity
-            android:name=".activities.MainActivity"
+            android:name="mail.technopark.bulletinBoard.activities.MainActivity"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
