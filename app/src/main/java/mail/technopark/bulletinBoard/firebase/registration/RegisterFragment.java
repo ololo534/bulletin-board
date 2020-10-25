@@ -29,9 +29,7 @@ public class RegisterFragment extends Fragment {
 
         final View view = inflater.inflate(R.layout.fragment_register, container, false);
 
-        if (helper.getAuth().getCurrentUser() != null){
-            helper.goToBulletinFragment();
-        }
+        if (helper.getAuth().getCurrentUser() != null) helper.getAuth().signOut();
 
         Button createAccBtn = view.findViewById(R.id.create_acc_btn);
 
