@@ -15,8 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -120,30 +119,28 @@ public class FirebaseHelper { // Class for Firebase methods
         return matcher.find();
     }
 
-    public void createBulletin(String bulletinId, //?
-                               String userId, String name, String description, String price,
-                               String type, String date,
+    public void createBulletin(String userId, String name, String description, String price,
+                               String type,
                                PhotoSupport photo,
                                String status) {
 
-        if (name.isEmpty() || description.isEmpty() || price.isEmpty() || type.isEmpty()
-        || date.isEmpty() || status.isEmpty()) {
+        if (name.isEmpty() || description.isEmpty() || price.isEmpty() || type.isEmpty() || status.isEmpty()) {
             Toast.makeText(context, "Все поля должны быть заполнены", Toast.LENGTH_SHORT).show();
             return;
         }
+        Date date = new Date();
 
         Bulletin bulletin = new Bulletin();
-        bulletin.setBulletinId(bulletinId);
         bulletin.setUserId(userId);
         bulletin.setName(name);
         bulletin.setDescription(description);
         bulletin.setPrice(price);
         bulletin.setType(type);
-        bulletin.setDate(date);
+        bulletin.setDate(date.toString());
         bulletin.setPhoto(photo);
         bulletin.setStatus(status);
 
-        mStore.collection("bulletins").document(bulletinId)
+        mStore.collection("bulletins").document()
                 .set(bulletin)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
