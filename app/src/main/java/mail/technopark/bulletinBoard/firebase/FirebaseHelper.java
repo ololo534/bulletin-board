@@ -78,11 +78,18 @@ public class FirebaseHelper { // Class for Firebase methods
                     Objects.requireNonNull(fbUser).sendEmailVerification(); // Email verification (Link)
                     String userId = fbUser.getUid();
 
+                    /*
                     Map<String, Object> user = new HashMap<>();
                     user.put("surname", surname);
                     user.put("name", name);
                     user.put("email", email);
                     user.put("phone", phone);
+                    */
+                    User user = new User();
+                    user.setSurname(surname);
+                    user.setName(name);
+                    user.setEmail(email);
+                    user.setPhone(phone);
 
                     mStore.collection("users").document(userId)
                             .set(user)
