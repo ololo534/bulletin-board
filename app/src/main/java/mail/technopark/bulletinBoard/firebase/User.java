@@ -1,7 +1,7 @@
 package mail.technopark.bulletinBoard.firebase;
 
 public class User {
-    private String id;
+    private String userId;
     private String surname;
     private String name;
     private String phone;
@@ -12,14 +12,15 @@ public class User {
 
     public User() {}
 
-    public User (String surname, String name, String phone, String email) {
+    public User (String userId, String surname, String name, String phone, String email,
+                 boolean is_name_visible, boolean is_phone_visible, PhotoSupport photo) {
         // Required empty constructor
     }
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String id) {
+        this.userId = id;
     }
 
     public String getSurname() {

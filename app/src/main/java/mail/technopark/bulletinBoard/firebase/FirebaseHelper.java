@@ -50,7 +50,10 @@ public class FirebaseHelper { // Class for Firebase methods
         else mAuth.signInWithEmailAndPassword(login, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) goToBulletinFragment(); // When task complete successfully the BulletinFragment will open
+                if (task.isSuccessful())
+                {
+                    goToBulletinFragment();
+                } // When task complete successfully the BulletinFragment will open
                 else Toast.makeText(context, "Неверный логин или пароль", Toast.LENGTH_SHORT).show();
             }
         });
@@ -78,13 +81,6 @@ public class FirebaseHelper { // Class for Firebase methods
                     Objects.requireNonNull(fbUser).sendEmailVerification(); // Email verification (Link)
                     String userId = fbUser.getUid();
 
-                    /*
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("surname", surname);
-                    user.put("name", name);
-                    user.put("email", email);
-                    user.put("phone", phone);
-                    */
                     User user = new User();
                     user.setSurname(surname);
                     user.setName(name);
@@ -122,5 +118,43 @@ public class FirebaseHelper { // Class for Firebase methods
         Pattern pattern = Pattern.compile(".+@(student\\.)?bmstu\\.ru");
         Matcher matcher = pattern.matcher(email);
         return matcher.find();
+    }
+
+    public void createBulletin(String bulletinId, //?
+                               String userId, String name, String description, String price,
+                               String type, String date,
+                               PhotoSupport photo,
+                               String status) {
+
+        if (name.isEmpty() || description.isEmpty() || price.isEmpty() || type.isEmpty()
+        || date.isEmpty() || status.isEmpty()) {
+            Toast.makeText(context, "Все поля должны быть заполнены", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Bulletin bulletin = new Bulletin();
+        bulletin.setBulletinId(bulletinId);
+        bulletin.setUserId(userId);
+        bulletin.setName(name);
+        bulletin.setDescription(description);
+        bulletin.setPrice(price);
+        bulletin.setType(type);
+        bulletin.setDate(date);
+        bulletin.setPhoto(photo);
+        bulletin.setStatus(status);
+
+        mStore.collection("bulletins").document(bulletinId)
+                .set(bulletin)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Объявление создано успешно", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Ошибка: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
