@@ -6,14 +6,13 @@ public class User {
     private String name;
     private String phone;
     private String email;
-    boolean is_phone_visible;
-    boolean is_name_visible;
+    boolean isPhoneVisible;
+    boolean isNameVisible;
     PhotoSupport photo;
 
     public User() {}
 
-    public User (String userId, String surname, String name, String phone, String email,
-                 boolean is_name_visible, boolean is_phone_visible, PhotoSupport photo) {
+    public User (String userId, String surname, String name, String phone, String email, boolean isNameVisible, boolean isPhoneVisible, PhotoSupport photo) {
         // Required empty constructor
     }
     public String getUserId() {
@@ -52,17 +51,17 @@ public class User {
     }
 
     public boolean getPhoneVisible() {
-        return is_phone_visible;
+        return isPhoneVisible;
     }
     public void setPhoneVisible(boolean flag) {
-        this.is_phone_visible = flag;
+        this.isPhoneVisible = flag;
     }
 
     public boolean getNameVisible() {
-        return is_name_visible;
+        return isNameVisible;
     }
     public void setNameVisible(boolean flag) {
-        this.is_name_visible = flag;
+        this.isNameVisible = flag;
     }
 
     public PhotoSupport getPhoto() {
