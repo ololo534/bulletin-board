@@ -12,7 +12,8 @@ public class User {
 
     public User() {}
 
-    public User(String userId, String surname, String name, String phone, String email, boolean isNameVisible, boolean isPhoneVisible, PhotoSupport photo) {
+    public User(String surname, String name, String phone, String email,
+                boolean isNameVisible, boolean isPhoneVisible, PhotoSupport photo) {
         // Required empty constructor
     }
     public String getUserId() {

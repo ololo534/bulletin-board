@@ -13,8 +13,8 @@ public class Bulletin {
 
     public Bulletin() {}
 
-    public Bulletin(String id, String userId, String name, String description, String price,
-                    String type, String date, PhotoSupport photo, String status) {
+    public Bulletin(String userId, String name, String description, String price,
+                    String type, PhotoSupport photo, String status) {
         // Required empty;
     }
 
