@@ -8,12 +8,10 @@ public class User {
     private String email;
     boolean isPhoneVisible;
     boolean isNameVisible;
-    PhotoSupport photo;
 
     public User() {}
 
-    public User(String surname, String name, String phone, String email,
-                boolean isNameVisible, boolean isPhoneVisible, PhotoSupport photo) {
+    public User(String surname, String name, String phone, String email) {
         // Required empty constructor
     }
     public String getUserId() {
@@ -63,12 +61,5 @@ public class User {
     }
     public void setNameVisible(boolean flag) {
         this.isNameVisible = flag;
-    }
-
-    public PhotoSupport getPhoto() {
-        return photo;
-    }
-    public void setPhoto(PhotoSupport photo) {
-        this.photo = photo;
     }
 }

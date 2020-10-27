@@ -8,13 +8,11 @@ public class Bulletin {
     private String price;
     private String type;
     private String date;
-    private PhotoSupport photo;
-    private String status;
+    private boolean status;
 
     public Bulletin() {}
 
-    public Bulletin(String userId, String name, String description, String price,
-                    String type, PhotoSupport photo, String status) {
+    public Bulletin(String userId, String name, String description, String price, String type) {
         // Required empty;
     }
 
@@ -39,13 +37,6 @@ public class Bulletin {
     public String getDate() {return date;}
     public void setDate(String date) {this.date = date;}
 
-    public PhotoSupport getPhoto() {
-        return photo;
-    }
-    public void setPhoto(PhotoSupport photo) {
-        this.photo = photo;
-    }
-
-    public String getStatus() {return status;}
-    public void setStatus(String status) {this.status = status;}
+    public boolean getStatus() {return status;}
+    public void setStatus(boolean status) {this.status = status;}
 }

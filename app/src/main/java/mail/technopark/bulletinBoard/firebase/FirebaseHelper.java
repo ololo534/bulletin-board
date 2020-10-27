@@ -85,6 +85,8 @@ public class FirebaseHelper { // Class for Firebase methods
                     user.setName(name);
                     user.setEmail(email);
                     user.setPhone(phone);
+                    user.setNameVisible(true);
+                    user.setPhoneVisible(false);
 
                     mStore.collection("users").document(userId)
                             .set(user)
@@ -119,12 +121,10 @@ public class FirebaseHelper { // Class for Firebase methods
         return matcher.find();
     }
 
-    public void createBulletin(String userId, String name, String description, String price,
-                               String type,
-                               PhotoSupport photo,
-                               String status) {
+    public void createBulletin(String userId, String name, String description,
+                               String price, String type) {
 
-        if (name.isEmpty() || description.isEmpty() || price.isEmpty() || type.isEmpty() || status.isEmpty()) {
+        if (name.isEmpty() || description.isEmpty() || price.isEmpty() || type.isEmpty()) {
             Toast.makeText(context, "Все поля должны быть заполнены", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -137,8 +137,7 @@ public class FirebaseHelper { // Class for Firebase methods
         bulletin.setPrice(price);
         bulletin.setType(type);
         bulletin.setDate(date.toString());
-        bulletin.setPhoto(photo);
-        bulletin.setStatus(status);
+        bulletin.setStatus(true);
 
         mStore.collection("bulletins").document()
                 .set(bulletin)
