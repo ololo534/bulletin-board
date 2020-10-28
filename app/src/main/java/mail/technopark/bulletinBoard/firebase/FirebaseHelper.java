@@ -15,7 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,10 +50,7 @@ public class FirebaseHelper { // Class for Firebase methods
         else mAuth.signInWithEmailAndPassword(login, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful())
-                {
-                    goToBulletinFragment();
-                } // When task complete successfully the BulletinFragment will open
+                if (task.isSuccessful()) goToBulletinFragment(); // When task complete successfully the BulletinFragment will open
                 else Toast.makeText(context, "Неверный логин или пароль", Toast.LENGTH_SHORT).show();
             }
         });
@@ -80,13 +78,11 @@ public class FirebaseHelper { // Class for Firebase methods
                     Objects.requireNonNull(fbUser).sendEmailVerification(); // Email verification (Link)
                     String userId = fbUser.getUid();
 
-                    User user = new User();
-                    user.setSurname(surname);
-                    user.setName(name);
-                    user.setEmail(email);
-                    user.setPhone(phone);
-                    user.setNameVisible(true);
-                    user.setPhoneVisible(false);
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("surname", surname);
+                    user.put("name", name);
+                    user.put("email", email);
+                    user.put("phone", phone);
 
                     mStore.collection("users").document(userId)
                             .set(user)
@@ -119,38 +115,5 @@ public class FirebaseHelper { // Class for Firebase methods
         Pattern pattern = Pattern.compile(".+@(student\\.)?bmstu\\.ru");
         Matcher matcher = pattern.matcher(email);
         return matcher.find();
-    }
-
-    public void createBulletin(String userId, String name, String description,
-                               String price, String type) {
-
-        if (name.isEmpty() || description.isEmpty() || price.isEmpty() || type.isEmpty()) {
-            Toast.makeText(context, "Все поля должны быть заполнены", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Date date = new Date();
-
-        Bulletin bulletin = new Bulletin();
-        bulletin.setUserId(userId);
-        bulletin.setName(name);
-        bulletin.setDescription(description);
-        bulletin.setPrice(price);
-        bulletin.setType(type);
-        bulletin.setDate(date.toString());
-        bulletin.setStatus(true);
-
-        mStore.collection("bulletins").document()
-                .set(bulletin)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(context, "Объявление создано успешно", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Ошибка: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }
