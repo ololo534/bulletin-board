@@ -30,7 +30,7 @@ public abstract class LocalDB extends RoomDatabase {
 
     private static volatile LocalDB INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
-    public static  ExecutorService databaseWriteExecutor =
+    public static final ExecutorService DB_WRITE_EXECUTOR =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public static LocalDB getDatabase(final Context context) {
@@ -39,7 +39,7 @@ public abstract class LocalDB extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             LocalDB.class, "local_database")
-                            .addCallback(sRoomDatabaseCallback)
+                            .addCallback(ROOM_DB_CALLBACK)
                             .build();
                 }
             }
@@ -48,13 +48,12 @@ public abstract class LocalDB extends RoomDatabase {
     }
 
 
-    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
+    private static final RoomDatabase.Callback ROOM_DB_CALLBACK = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
 
-
-            databaseWriteExecutor.execute(() -> {
+            DB_WRITE_EXECUTOR.execute(() -> {
 
                         SettingsDao settingsDao = INSTANCE.settingsDao();
 

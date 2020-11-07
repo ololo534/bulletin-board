@@ -10,9 +10,9 @@ import mail.technopark.bulletin_board.local_database.entity.User;
 import mail.technopark.bulletin_board.local_database.repository.UserRepository;
 
 public class UserViewModel extends AndroidViewModel {
-    private UserRepository mRepository;
+    private final UserRepository mRepository;
 
-    private LiveData<User> mUser;
+    private final LiveData<User> mUser;
 
     public UserViewModel(Application application) {
         super(application);

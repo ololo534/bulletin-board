@@ -13,8 +13,8 @@ import mail.technopark.bulletin_board.local_database.entity.TextMessages;
 
 public class TextMessagesRepository {
 
-    private TextMessagesDao mTextMessagesDao;
-    private LiveData<TextMessages> mTextMessage;
+    private final TextMessagesDao mTextMessagesDao;
+    private final LiveData<TextMessages> mTextMessage;
 
    public TextMessagesRepository(Application application){
         LocalDB database = LocalDB.getDatabase(application);

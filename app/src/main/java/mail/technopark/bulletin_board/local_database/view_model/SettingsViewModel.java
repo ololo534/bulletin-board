@@ -12,9 +12,9 @@ import mail.technopark.bulletin_board.local_database.repository.SettingsReposito
 
 public class SettingsViewModel extends AndroidViewModel {
 
-    private SettingsRepository mRepository;
+    private final SettingsRepository mRepository;
 
-    private LiveData<List<Settings>> mSettings;
+    private final LiveData<List<Settings>> mSettings;
 
     public SettingsViewModel(Application application) {
         super(application);

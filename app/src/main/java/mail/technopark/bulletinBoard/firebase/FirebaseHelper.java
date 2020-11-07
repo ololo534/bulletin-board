@@ -1,16 +1,10 @@
 package mail.technopark.bulletinBoard.firebase;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -46,15 +40,12 @@ public class FirebaseHelper { // Class for Firebase methods
 
     public void auth(String login, String password){ // Auth method
         if (login.isEmpty() || password.isEmpty()) Toast.makeText(context, "Введите логин и пароль", Toast.LENGTH_SHORT).show();
-        else mAuth.signInWithEmailAndPassword(login, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful())
-                {
-                    goToBulletinFragment();
-                } // When task complete successfully the BulletinFragment will open
-                else Toast.makeText(context, "Неверный логин или пароль", Toast.LENGTH_SHORT).show();
-            }
+        else mAuth.signInWithEmailAndPassword(login, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful())
+            {
+                goToBulletinFragment();
+            } // When task complete successfully the BulletinFragment will open
+            else Toast.makeText(context, "Неверный логин или пароль", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -72,47 +63,35 @@ public class FirebaseHelper { // Class for Firebase methods
             return;
         }
 
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){ // When task complete successfully the data will add into Firestore
-                    FirebaseUser fbUser = mAuth.getCurrentUser();
-                    Objects.requireNonNull(fbUser).sendEmailVerification(); // Email verification (Link)
-                    String userId = fbUser.getUid();
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){ // When task complete successfully the data will add into Firestore
+                FirebaseUser fbUser = mAuth.getCurrentUser();
+                Objects.requireNonNull(fbUser).sendEmailVerification(); // Email verification (Link)
+                String userId = fbUser.getUid();
 
-                    User user = new User();
-                    user.setSurname(surname);
-                    user.setName(name);
-                    user.setEmail(email);
-                    user.setPhone(phone);
-                    user.setNameVisible(true);
-                    user.setPhoneVisible(false);
+                User user = new User();
+                user.setSurname(surname);
+                user.setName(name);
+                user.setEmail(email);
+                user.setPhone(phone);
+                user.setNameVisible(true);
+                user.setPhoneVisible(false);
 
-                    mStore.collection("users").document(userId)
-                            .set(user)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(context, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(context, "Ошибка: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                mStore.collection("users").document(userId)
+                        .set(user)
+                        .addOnSuccessListener(aVoid -> Toast.makeText(context, "Регистрация прошла успешно", Toast.LENGTH_SHORT).show())
+                        .addOnFailureListener(e -> Toast.makeText(context, "Ошибка: " + e.getMessage(), Toast.LENGTH_SHORT).show());
 
-                    goToBulletinFragment();
-                }
+                goToBulletinFragment();
             }
         });
     }
     public void goToBulletinFragment(){
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.container, new BulletinFragment())
-                .addToBackStack(BulletinFragment.class.getSimpleName()).commitAllowingStateLoss();
+                .replace(R.id.container, BulletinFragment.newInstance())
+                .addToBackStack(BulletinFragment.class.getSimpleName())
+                .commitAllowingStateLoss();
     }
 
     private boolean isEmailCorrect(String email){
@@ -141,16 +120,7 @@ public class FirebaseHelper { // Class for Firebase methods
 
         mStore.collection("bulletins").document()
                 .set(bulletin)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(context, "Объявление создано успешно", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context, "Ошибка: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                .addOnSuccessListener(aVoid -> Toast.makeText(context, "Объявление создано успешно", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(context, "Ошибка: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }
