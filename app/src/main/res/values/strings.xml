@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Bulletin-board</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="login">Логин</string>
+    <string name="hello">Добро пожаловать</string>
+    <string name="mail">E-mail</string>
     <string name="password">Пароль</string>
     <string name="enter">Войти</string>
     <string name="register">Зарегистрироваться</string>

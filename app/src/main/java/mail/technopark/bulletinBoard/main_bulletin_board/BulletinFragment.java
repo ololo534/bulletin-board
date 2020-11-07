@@ -24,16 +24,14 @@ public class BulletinFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_bulletin, container, false);
-
         Button logoutBtn = view.findViewById(R.id.logout_btn);
-
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (helper.getAuth().getCurrentUser() != null) {
                     helper.getAuth().signOut();
+                    //clear last fragment from back stack
                     goToAuthFragment();
                 }
             }
