@@ -12,8 +12,8 @@ import mail.technopark.bulletin_board.local_database.entity.Settings;
 
 public class SettingsRepository {
 
-    private SettingsDao mSettingsDao;
-    private LiveData<List<Settings>> mSettings;
+    private final SettingsDao mSettingsDao;
+    private final LiveData<List<Settings>> mSettings;
 
    public SettingsRepository(Application application){
         LocalDB database = LocalDB.getDatabase(application);

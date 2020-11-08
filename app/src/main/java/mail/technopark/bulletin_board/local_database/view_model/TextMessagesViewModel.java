@@ -11,9 +11,9 @@ import mail.technopark.bulletin_board.local_database.repository.TextMessagesRepo
 
 public class TextMessagesViewModel extends AndroidViewModel {
 
-    private TextMessagesRepository mRepository;
+    private final TextMessagesRepository mRepository;
 
-    private LiveData<TextMessages> mTextMessage;
+    private final LiveData<TextMessages> mTextMessage;
 
     public TextMessagesViewModel(Application application) {
         super(application);

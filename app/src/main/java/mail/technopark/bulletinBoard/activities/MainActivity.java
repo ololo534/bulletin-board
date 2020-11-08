@@ -1,8 +1,9 @@
 package mail.technopark.bulletinBoard.activities;
 
-import android.app.FragmentManager;
+
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import mail.technopark.bulletinBoard.firebase.authentication.AuthFragment;
 import mail.technopark.bulletinBoard.R;
@@ -15,16 +16,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if(savedInstanceState == null) {
-            getFragmentManager()
+            getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container, new AuthFragment(), "AuthFragment")
+                    .add(R.id.container, AuthFragment.newInstance(), "AuthFragment")
                     .addToBackStack(AuthFragment.class.getSimpleName()).commit();
         }
     }
 
     @Override
     public void onBackPressed() {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         AuthFragment fragment = (AuthFragment) fragmentManager.findFragmentByTag("AuthFragment");
         if (fragment != null && fragment.isVisible()) {
             if (fragmentManager.getBackStackEntryCount() > 0) {
