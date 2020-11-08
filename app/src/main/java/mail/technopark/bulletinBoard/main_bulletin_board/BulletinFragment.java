@@ -32,18 +32,9 @@ public class BulletinFragment extends Fragment {
         logoutBtn.setOnClickListener(v -> {
             if (helper.getAuth().getCurrentUser() != null) {
                 helper.getAuth().signOut();
-                //clear last fragment from back stack
-                goToAuthFragment();
+                getParentFragmentManager().popBackStack("AuthFragment", 0);
             }
         });
         return view;
-    }
-
-    private void goToAuthFragment(){
-        getParentFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, new AuthFragment())
-                .addToBackStack(AuthFragment.class.getSimpleName())
-                .commit();
     }
 }
