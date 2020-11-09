@@ -11,4 +11,9 @@
     <string name="phone">Телефон</string>
     <string name="logout">Выйти</string>
     <string name="restore_password">Восстановить пароль</string>
+    <string name="ad_header">Header</string>
+    <string name="ad_description">Description</string>
+    <string name="filter_button">Filter</string>
+    <string name="search">Search</string>
+    <string name="goToGenFeed">Feed</string>
 </resources>

@@ -1,5 +1,7 @@
 package mail.technopark.bulletinBoard.firebase;
 
+import java.util.List;
+
 public class Bulletin {
     private String bulletinId;
     private String userId;
@@ -10,11 +12,13 @@ public class Bulletin {
     private String date;
     private boolean status;
 
+
     public Bulletin() {}
 
     public Bulletin(String userId, String name, String description, String price, String type) {
         // Required empty;
     }
+
 
     public String getBulletinId() {return bulletinId;}
     public void setBulletinId(String id) {this.bulletinId = id;}
