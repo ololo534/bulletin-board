@@ -100,7 +100,7 @@ public class FirebaseHelper { // Class for Firebase methods
         return matcher.find();
     }
 
-    public void createBulletin(String userId, String name, String description,
+    public void createBulletin(String userName, boolean userVisibility, String name, String description,
                                String price, String type) {
 
         if (name.isEmpty() || description.isEmpty() || price.isEmpty() || type.isEmpty()) {
@@ -110,7 +110,8 @@ public class FirebaseHelper { // Class for Firebase methods
         Date date = new Date();
 
         Bulletin bulletin = new Bulletin();
-        bulletin.setUserId(userId);
+        bulletin.setUserName(userName);
+        bulletin.setUserVisibility(userVisibility);
         bulletin.setName(name);
         bulletin.setDescription(description);
         bulletin.setPrice(price);
