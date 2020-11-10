@@ -1,6 +1,8 @@
 package mail.technopark.bulletinBoard.firebase;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
@@ -8,6 +10,9 @@ import androidx.fragment.app.FragmentManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Date;
 import java.util.Objects;
@@ -20,12 +25,16 @@ import mail.technopark.bulletinBoard.main_bulletin_board.BulletinFragment;
 public class FirebaseHelper { // Class for Firebase methods
     private final FirebaseAuth mAuth;
     private final FirebaseFirestore mStore;
+    private final FirebaseStorage mCloud;
+    private final PhotoSupport photoSupport;
     private final FragmentManager fragmentManager;
     private final Context context;
 
     public FirebaseHelper(FragmentManager fragmentManager, Context context){ // Constructor
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
+        mCloud = FirebaseStorage.getInstance();
+        photoSupport = new PhotoSupport();
         this.fragmentManager = fragmentManager;
         this.context = context;
     }
@@ -37,6 +46,8 @@ public class FirebaseHelper { // Class for Firebase methods
     public FirebaseFirestore getFirestore(){
         return mStore;
     }
+
+    public FirebaseStorage getStorage() { return mCloud; }
 
     public void auth(String login, String password){ // Auth method
         if (login.isEmpty() || password.isEmpty()) Toast.makeText(context, "Введите логин и пароль", Toast.LENGTH_SHORT).show();
@@ -122,5 +133,43 @@ public class FirebaseHelper { // Class for Firebase methods
                 .set(bulletin)
                 .addOnSuccessListener(aVoid -> Toast.makeText(context, "Объявление создано успешно", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(context, "Ошибка: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+    public void addUserPhoto(ImageView imageView){
+        StorageReference ref = mCloud.getReference().child("users/" + mAuth.getUid() + ".jpg");
+        UploadTask uploadTask = ref.putBytes(photoSupport.getByteArray(imageView));
+
+        uploadTask.addOnFailureListener(e -> Toast.makeText(context, "Ваше фото не было загружено", Toast.LENGTH_SHORT).show()).addOnSuccessListener(taskSnapshot -> Toast.makeText(context, "Добавление фото прошло успешно", Toast.LENGTH_SHORT).show());
+    }
+
+    public ImageView getUserPhoto(ImageView imageView){
+        final ImageView[] result = new ImageView[1]; // No other ways to use this in onSuccess
+        // Need tests. Maybe we should check the list of files in collection before
+        StorageReference ref = mCloud.getReference().child("users/" + mAuth.getUid() + ".jpg");
+        final long megabyte = 1024 * 1024;
+        ref.getBytes(megabyte).addOnFailureListener(exception -> Toast.makeText(context, "Не удалось загрузить фото", Toast.LENGTH_SHORT).show()).addOnSuccessListener(bytes -> {
+            if (bytes == null) result[0].setBackgroundColor(Color.GREEN);
+            else result[0] = photoSupport.getPhoto(bytes, imageView);
+        });
+        return result[0];
+    }
+
+    public void addBulletinPhoto(ImageView imageView, String id){
+        StorageReference ref = mCloud.getReference().child("bulletins/" + id + ".jpg");
+        UploadTask uploadTask = ref.putBytes(photoSupport.getByteArray(imageView));
+
+        uploadTask.addOnFailureListener(e -> Toast.makeText(context, "Фото не было загружено", Toast.LENGTH_SHORT).show()).addOnSuccessListener(taskSnapshot -> Toast.makeText(context, "Добавление фото прошло успешно", Toast.LENGTH_SHORT).show());
+    }
+
+    public ImageView getBulletinPhoto(ImageView imageView, String id){
+        final ImageView[] result = new ImageView[1]; // No other ways to use this in onSuccess
+        // Need tests. Maybe we should check the list of files in collection before
+        StorageReference ref = mCloud.getReference().child("bulletins/" + id + ".jpg");
+        final long megabyte = 1024 * 1024;
+        ref.getBytes(megabyte).addOnFailureListener(exception -> Toast.makeText(context, "Не удалось загрузить фото", Toast.LENGTH_SHORT).show()).addOnSuccessListener(bytes -> {
+            if (bytes == null) result[0].setBackgroundColor(Color.GREEN);
+            else result[0] = photoSupport.getPhoto(bytes, imageView);
+        });
+        return result[0];
     }
 }

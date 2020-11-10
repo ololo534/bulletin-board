@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 
 import mail.technopark.bulletinBoard.R;
 import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
-import mail.technopark.bulletinBoard.firebase.authentication.AuthFragment;
 
 public class BulletinFragment extends Fragment {
     private FirebaseHelper helper;
