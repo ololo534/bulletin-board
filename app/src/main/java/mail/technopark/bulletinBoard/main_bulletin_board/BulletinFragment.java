@@ -1,19 +1,28 @@
 package mail.technopark.bulletinBoard.main_bulletin_board;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 import mail.technopark.bulletinBoard.R;
+import mail.technopark.bulletinBoard.firebase.Bulletin;
 import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
-import mail.technopark.bulletinBoard.firebase.authentication.AuthFragment;
 
 public class BulletinFragment extends Fragment {
     private FirebaseHelper helper;
+    private final ArrayList<Bulletin> bulletins = new ArrayList<>();
+    //private String userName;
 
     public static BulletinFragment newInstance(){
         return new BulletinFragment();
@@ -35,6 +44,23 @@ public class BulletinFragment extends Fragment {
                 getParentFragmentManager().popBackStack("AuthFragment", 0);
             }
         });
+        // Getting ads.
+        helper.getFirestore().collection("bulletins")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            Bulletin bulletin = document.toObject(Bulletin.class);
+                            bulletins.add(bulletin);
+                        }
+                        RecyclerView recyclerView = view.findViewById(R.id.rv);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+                        RVAdapter adapter = new RVAdapter(bulletins);
+                        recyclerView.setAdapter(adapter);
+                    } else {
+                        Log.d("TAG", "Error on reading docs");
+                    }
+                });
         return view;
     }
 }
