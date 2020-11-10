@@ -13,8 +13,8 @@
         android:theme="@style/Theme.BulletinBoard"
         android:fullBackupContent="@xml/backup_descriptor">
         <activity
-            android:name="mail.technopark.bulletinBoard.activities.MainActivity"
-            android:noHistory="true">
+            android:name="mail.technopark.bulletinBoard.activities.MainActivity">
+<!--        удален аттрибут noHistory, зачем он был создан, никто не помнит    -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
