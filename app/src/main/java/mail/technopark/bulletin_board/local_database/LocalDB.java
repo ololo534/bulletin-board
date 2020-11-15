@@ -27,19 +27,20 @@ public abstract class LocalDB extends RoomDatabase {
 
     public abstract TextMessagesDao textMessagesDao();
 
-
     private static volatile LocalDB INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     public static final ExecutorService DB_WRITE_EXECUTOR =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public static LocalDB getDatabase(final Context context) {
+
         if (INSTANCE == null) {
             synchronized (LocalDB.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             LocalDB.class, "local_database")
-                            .addCallback(ROOM_DB_CALLBACK)
+                            .addCallback(ROOM_DB_CALLBACK_CREATE)
+                            .addCallback(ROOM_DB_CALLBACK_OPEN)
                             .build();
                 }
             }
@@ -47,8 +48,7 @@ public abstract class LocalDB extends RoomDatabase {
         return INSTANCE;
     }
 
-
-    private static final RoomDatabase.Callback ROOM_DB_CALLBACK = new RoomDatabase.Callback() {
+    private static final RoomDatabase.Callback ROOM_DB_CALLBACK_CREATE = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -66,8 +66,18 @@ public abstract class LocalDB extends RoomDatabase {
                         setting = new Settings(3, "language", "ru");
                         settingsDao.insert(setting);
 
-                        // TextMessagesDao textMessagesDao = INSTANCE.textMessagesDao();
+                    }
+            );
+        }
+    };
 
+    private static final RoomDatabase.Callback ROOM_DB_CALLBACK_OPEN = new RoomDatabase.Callback() {
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+
+            DB_WRITE_EXECUTOR.execute(() -> {
+                        UserDao userDao = INSTANCE.userDao();
                     }
             );
         }

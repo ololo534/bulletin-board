@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -20,12 +23,13 @@ import mail.technopark.bulletinBoard.R;
 import mail.technopark.bulletinBoard.firebase.Bulletin;
 import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
 import mail.technopark.bulletinBoard.firebase.PhotoSupport;
-import mail.technopark.bulletinBoard.firebase.bulletin.CreateBulletinFragment;
+import mail.technopark.bulletin_board.local_database.view_model.UserViewModel;
 
 public class BulletinFragment extends Fragment {
     private FirebaseHelper helper;
     private final ArrayList<Bulletin> bulletins = new ArrayList<>();
     private EditText editText;
+    private UserViewModel mUserViewModel;
     //private String userName;
 
     public static BulletinFragment newInstance(){
@@ -37,6 +41,7 @@ public class BulletinFragment extends Fragment {
         super.onCreate(savedInstanceState);
         helper = new FirebaseHelper(getParentFragmentManager(), getActivity());
         PhotoSupport photoSupport = new PhotoSupport();
+        mUserViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 
     @Override
@@ -46,16 +51,12 @@ public class BulletinFragment extends Fragment {
         logoutBtn.setOnClickListener(v -> {
             if (helper.getAuth().getCurrentUser() != null) {
                 helper.getAuth().signOut();
+                mUserViewModel.delete();
                 getParentFragmentManager().popBackStack("AuthFragment", 0);
             }
         });
         // Create bulletin
-        Button createBul = view.findViewById(R.id.create_bul_btn);
-        createBul.setOnClickListener(v -> getParentFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, CreateBulletinFragment.newInstance(), "CreateBulletinFragment")
-                .addToBackStack(CreateBulletinFragment.class.getSimpleName())
-                .commit());
+
 
         editText = view.findViewById(R.id.ad_search);
         editText.setOnKeyListener((v, keyCode, event) -> {

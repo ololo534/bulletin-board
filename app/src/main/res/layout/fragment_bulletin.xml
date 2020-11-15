@@ -74,12 +74,6 @@
                 android:transitionGroup="true"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-            <Button
-                android:id="@+id/create_bul_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/create_bulletin" />
-
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
