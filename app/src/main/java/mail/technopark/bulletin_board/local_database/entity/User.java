@@ -1,5 +1,6 @@
 package mail.technopark.bulletin_board.local_database.entity;
 
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,7 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "user_table")
 public class User {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "user_id")
     private long id;
 
@@ -17,8 +18,8 @@ public class User {
     @ColumnInfo(name = "user_password")
     private String password;
 
-    public User(long id, String email, String password) {
-        this.id = id;
+    public User(String email, String password) {
+        this.id = 1;
         this.email = email;
         this.password = password;
     }
@@ -31,7 +32,8 @@ public class User {
         this.id = id;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 

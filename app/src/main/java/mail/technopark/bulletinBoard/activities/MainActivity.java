@@ -2,6 +2,7 @@ package mail.technopark.bulletinBoard.activities;
 
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 

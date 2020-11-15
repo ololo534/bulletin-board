@@ -1,5 +1,7 @@
 package mail.technopark.bulletin_board.local_database.dao;
 
+
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -19,12 +21,18 @@ public interface UserDao {
     @Update
     void update(User user);
 
-    @Query("DELETE FROM user_table WHERE user_id ==:id")
-    void deleteByID(long id);
+    @Query("DELETE  from user_table")
+    void delete();
 
-    @Query("SELECT * from user_table WHERE user_id ==:id")
-    LiveData<User> getUserByID(long id);
+    @Query("SELECT * from user_table WHERE user_id ==:email")
+    LiveData<User> getUserByEmail(String email);
 
     @Query("SELECT * from user_table")
-    LiveData<User> getUser();
+    User getUser();
+
+    @Query("SELECT count(*) from user_table")
+    Integer numOfRec();
+
+
+
 }

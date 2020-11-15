@@ -2,6 +2,7 @@ package mail.technopark.bulletin_board.local_database;
 
 import android.content.Context;
 
+
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -27,26 +28,27 @@ public abstract class LocalDB extends RoomDatabase {
 
     public abstract TextMessagesDao textMessagesDao();
 
-
     private static volatile LocalDB INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     public static final ExecutorService DB_WRITE_EXECUTOR =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public static LocalDB getDatabase(final Context context) {
+
         if (INSTANCE == null) {
             synchronized (LocalDB.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             LocalDB.class, "local_database")
+                            .allowMainThreadQueries()
                             .addCallback(ROOM_DB_CALLBACK)
+                            .addCallback(ROOM_DB_CALLBACK_2)
                             .build();
                 }
             }
         }
         return INSTANCE;
     }
-
 
     private static final RoomDatabase.Callback ROOM_DB_CALLBACK = new RoomDatabase.Callback() {
         @Override
@@ -55,6 +57,7 @@ public abstract class LocalDB extends RoomDatabase {
 
             DB_WRITE_EXECUTOR.execute(() -> {
 
+                        UserDao userDao = INSTANCE.userDao();
                         SettingsDao settingsDao = INSTANCE.settingsDao();
 
                         Settings setting = new Settings(0, "is_phone_visible", "false");
@@ -72,4 +75,18 @@ public abstract class LocalDB extends RoomDatabase {
             );
         }
     };
+
+    private static final RoomDatabase.Callback ROOM_DB_CALLBACK_2 = new RoomDatabase.Callback() {
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+
+            DB_WRITE_EXECUTOR.execute(() -> {
+                        UserDao userDao = INSTANCE.userDao();
+                    }
+            );
+        }
+    };
+
+
 }

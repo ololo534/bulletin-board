@@ -10,27 +10,35 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import mail.technopark.bulletinBoard.R;
 import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
 import mail.technopark.bulletinBoard.firebase.registration.RegisterFragment;
+import mail.technopark.bulletin_board.local_database.entity.User;
+import mail.technopark.bulletin_board.local_database.view_model.UserViewModel;
 
 public class AuthFragment extends Fragment {
     private FirebaseHelper helper; // Class with all methods for Firebase
-
     public static AuthFragment newInstance(){
-        return new AuthFragment();
+       return new AuthFragment();
     }
+    private UserViewModel mUserViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         helper = new FirebaseHelper(getParentFragmentManager(), getActivity());
+        mUserViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
+        if (mUserViewModel.numOfRec()!=0)
+        {
+            helper.auth(mUserViewModel.getUser().getEmail(), mUserViewModel.getUser().getPassword());
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_auth, container, false);
         Button registerBtn = view.findViewById(R.id.register_btn);
         Button enterBtn = view.findViewById(R.id.enter_btn);
@@ -44,7 +52,11 @@ public class AuthFragment extends Fragment {
                 .addToBackStack(RegisterFragment.class.getSimpleName())
                 .commit());
 
-        enterBtn.setOnClickListener(v -> helper.auth(loginEt.getText().toString(), passwordEt.getText().toString()));
+        enterBtn.setOnClickListener(v -> {
+            User user = new User(loginEt.getText().toString(), passwordEt.getText().toString());
+            mUserViewModel.insert(user);
+            helper.auth(loginEt.getText().toString(), passwordEt.getText().toString());
+        });
 
         restoreTv.setOnClickListener(v -> { // Restore password using DialogBox
             final EditText resetEt = new EditText(v.getContext());

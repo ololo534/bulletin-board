@@ -9,12 +9,17 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 
 import mail.technopark.bulletinBoard.R;
 import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
+import mail.technopark.bulletin_board.local_database.entity.User;
+import mail.technopark.bulletin_board.local_database.view_model.UserViewModel;
 
 public class RegisterFragment extends Fragment {
     FirebaseHelper helper;
+    private UserViewModel mUserViewModel;
 
     public static RegisterFragment newInstance(){
         return new RegisterFragment();
@@ -24,6 +29,7 @@ public class RegisterFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         helper = new FirebaseHelper(getParentFragmentManager(), getActivity());
+        mUserViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 
     @Override
@@ -38,7 +44,10 @@ public class RegisterFragment extends Fragment {
             String password = ((EditText) view.findViewById(R.id.password_reg_et)).getText().toString();
             String phone = ((EditText) view.findViewById(R.id.phone_et)).getText().toString();
             helper.createAccount(email, password, surname, name, phone);
+            User user = new User(email, password);
+            mUserViewModel.insert(user);
         });
         return view;
+
     }
 }
