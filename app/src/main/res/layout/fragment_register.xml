@@ -35,6 +35,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--    Wave image-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/wave"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -134,19 +147,6 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         android:text="@string/register"/>
-                </LinearLayout>
-
-                <!--    Wave image-->
-                <LinearLayout
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:layout_height="117.7dp"
-                        android:layout_width="match_parent"
-                        android:background="@drawable/wave"
-                        android:layout_gravity="center_horizontal"
-                        tools:ignore="ContentDescription" />
                 </LinearLayout>
             </LinearLayout>
 

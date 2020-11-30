@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,15 +33,16 @@
                     android:id="@+id/back_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="back" />
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:text="@string/back"
+                    app:strokeWidth="@dimen/plane_00"/>
 
                 <TextView
                     android:id="@+id/feed_textView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/plane_00"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Feed"
+                    android:text="@string/feed"
                     android:textAlignment="center"
                     android:textSize="25sp"
                     android:textStyle="bold" />
@@ -48,8 +51,9 @@
                     android:id="@+id/filter_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Filter" />
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:text="@string/filter"
+                    app:strokeWidth="@dimen/plane_00" />
 
             </LinearLayout>
 
@@ -58,12 +62,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:hint="Search"/>
+                android:autofillHints="@string/search"
+                android:hint="@string/search"
+                android:inputType="textAutoCorrect" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:transitionGroup="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         </LinearLayout>
     </LinearLayout>

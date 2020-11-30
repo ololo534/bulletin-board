@@ -25,6 +25,7 @@
             android:src="@drawable/logo"
             android:layout_gravity="center_horizontal"
             tools:ignore="ContentDescription" />
+
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
@@ -35,6 +36,20 @@
         android:layout_marginBottom="@dimen/loginViewsMargin"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <!--    Wave image-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/wave"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -111,20 +126,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"/>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent">
-                    <ImageView
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"
-                        android:background="@drawable/wave"
-                        android:layout_gravity="center_horizontal"
-                        tools:ignore="ContentDescription" />
-                </LinearLayout>
             </LinearLayout>
-
 
         </ScrollView>
     </androidx.cardview.widget.CardView>
