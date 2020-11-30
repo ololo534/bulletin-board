@@ -11,4 +11,8 @@
     <string name="phone">Телефон</string>
     <string name="logout">Выйти</string>
     <string name="restore_password">Восстановить пароль</string>
+    <string name="feed">Объявления</string>
+    <string name="filter">Filter</string>
+    <string name="back">Back</string>
+    <string name="search">Search</string>
 </resources>
