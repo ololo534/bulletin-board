@@ -9,9 +9,7 @@ import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import mail.technopark.bulletinBoard.R;
 import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
