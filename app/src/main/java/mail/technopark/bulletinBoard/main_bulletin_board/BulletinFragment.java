@@ -10,6 +10,7 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.Objects;
 import mail.technopark.bulletinBoard.R;
 import mail.technopark.bulletinBoard.firebase.Bulletin;
 import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
+import mail.technopark.bulletinBoard.firebase.bulletin.CreateBulletinFragment;
 
 public class BulletinFragment extends Fragment {
     private FirebaseHelper helper;
@@ -44,11 +46,19 @@ public class BulletinFragment extends Fragment {
                 getParentFragmentManager().popBackStack("AuthFragment", 0);
             }
         });
+        // Create bulletin
+        Button createBul = view.findViewById(R.id.create_bul_btn);
+        createBul.setOnClickListener(v -> getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, CreateBulletinFragment.newInstance())
+                .addToBackStack(CreateBulletinFragment.class.getSimpleName())
+                .commit());
         // Getting ads.
         helper.getFirestore().collection("bulletins")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        bulletins.clear();
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             Bulletin bulletin = document.toObject(Bulletin.class);
                             bulletins.add(bulletin);

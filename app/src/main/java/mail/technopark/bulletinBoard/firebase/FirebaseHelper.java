@@ -134,6 +134,8 @@ public class FirebaseHelper { // Class for Firebase methods
                 .set(bulletin)
                 .addOnSuccessListener(aVoid -> Toast.makeText(context, "Объявление создано успешно", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(context, "Ошибка: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+
+        goToBulletinFragment();
     }
 
     public void addUserPhoto(ImageView imageView){
