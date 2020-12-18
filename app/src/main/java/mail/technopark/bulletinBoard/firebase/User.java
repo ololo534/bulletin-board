@@ -9,9 +9,7 @@ public class User {
     boolean isPhoneVisible;
     boolean isNameVisible;
 
-    public User() {}
-
-    public User(String surname, String name, String phone, String email) {
+    public User() {
         // Required empty constructor
     }
     public String getUserId() {

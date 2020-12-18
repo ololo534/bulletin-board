@@ -3,6 +3,7 @@ package mail.technopark.bulletinBoard.main_bulletin_board;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,8 +15,10 @@ import java.util.List;
 
 import mail.technopark.bulletinBoard.R;
 import mail.technopark.bulletinBoard.firebase.Bulletin;
+import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.BulletinViewHolder> {
+    final FirebaseHelper firebaseHelper = new FirebaseHelper(null, null);
 
     public static class BulletinViewHolder extends RecyclerView.ViewHolder {
         //final CardView cardView;
@@ -23,7 +26,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.BulletinViewHolder
         final TextView bulletinDescription;
         final TextView bulletinDate;
         final TextView bulletinUser;
-        // Add imageView;
+        final ImageView bulletinImageView;
 
         public BulletinViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -32,7 +35,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.BulletinViewHolder
             bulletinDescription = itemView.findViewById(R.id.ad_description);
             bulletinDate = itemView.findViewById(R.id.ad_date);
             bulletinUser = itemView.findViewById(R.id.ad_user);
-            // imageView;
+            bulletinImageView = itemView.findViewById(R.id.ad_image);
         }
     }
 
@@ -66,6 +69,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.BulletinViewHolder
         if (bulletin.getUserVisibility()) {
             holder.bulletinUser.setText(bulletin.getUserName());
         }
+        firebaseHelper.getBulletinPhoto(bulletin.getBulletinId(), holder.bulletinImageView);
     }
 
     @Override

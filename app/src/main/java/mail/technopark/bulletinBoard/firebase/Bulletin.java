@@ -12,10 +12,7 @@ public class Bulletin {
     private String userName;
     private boolean userVisibility;
 
-
-    public Bulletin() {}
-
-    public Bulletin(String userId, String name, String description, String price, String type) {
+    public Bulletin() {
         // Required empty;
     }
 

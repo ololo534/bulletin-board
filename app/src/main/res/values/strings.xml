@@ -15,4 +15,10 @@
     <string name="filter">Filter</string>
     <string name="back">Back</string>
     <string name="search">Search</string>
+    <string name="create_bulletin">Create Bulletin</string>
+    <string name="bulletin_name">Bulletin Name</string>
+    <string name="bulletin_description">Bulletin Description</string>
+    <string name="bulletin_price">Bulletin Price</string>
+    <string name="bulletin_type">bulletin_type</string>
+    <string name="finish">Завершить</string>
 </resources>

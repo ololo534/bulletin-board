@@ -19,6 +19,7 @@ import java.util.Objects;
 import mail.technopark.bulletinBoard.R;
 import mail.technopark.bulletinBoard.firebase.Bulletin;
 import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
+import mail.technopark.bulletinBoard.firebase.PhotoSupport;
 import mail.technopark.bulletinBoard.firebase.bulletin.CreateBulletinFragment;
 
 public class BulletinFragment extends Fragment {
@@ -34,6 +35,7 @@ public class BulletinFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         helper = new FirebaseHelper(getParentFragmentManager(), getActivity());
+        PhotoSupport photoSupport = new PhotoSupport();
     }
 
     @Override
@@ -50,7 +52,7 @@ public class BulletinFragment extends Fragment {
         Button createBul = view.findViewById(R.id.create_bul_btn);
         createBul.setOnClickListener(v -> getParentFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, CreateBulletinFragment.newInstance())
+                .replace(R.id.container, CreateBulletinFragment.newInstance(), "CreateBulletinFragment")
                 .addToBackStack(CreateBulletinFragment.class.getSimpleName())
                 .commit());
         // Getting ads.
@@ -61,6 +63,7 @@ public class BulletinFragment extends Fragment {
                         bulletins.clear();
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             Bulletin bulletin = document.toObject(Bulletin.class);
+                            bulletin.setBulletinId(document.getId());
                             bulletins.add(bulletin);
                         }
                         RecyclerView recyclerView = view.findViewById(R.id.rv);
