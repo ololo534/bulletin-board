@@ -21,4 +21,5 @@
     <string name="bulletin_price">Bulletin Price</string>
     <string name="bulletin_type">bulletin_type</string>
     <string name="finish">Завершить</string>
+    <string name="photo_from_gallery">Photo from gallery</string>
 </resources>
