@@ -1,15 +1,18 @@
 package mail.technopark.bulletin_board.local_database.repository;
 
 import android.app.Application;
+
+import androidx.lifecycle.LiveData;
+
 import mail.technopark.bulletin_board.local_database.LocalDB;
 import mail.technopark.bulletin_board.local_database.dao.UserDao;
 import mail.technopark.bulletin_board.local_database.entity.User;
 
-
 public class UserRepository {
 
     private final UserDao mUserDao;
-    private final User mUser;
+    private final LiveData<User>  mUser;
+
 
    public  UserRepository(Application application) {
         LocalDB database = LocalDB.getDatabase(application);
@@ -17,7 +20,8 @@ public class UserRepository {
         mUser = mUserDao.getUser();
     }
 
-    public User getUser() {
+    public LiveData<User> getUser()
+    {
         return mUser;
     }
 
@@ -30,8 +34,5 @@ public class UserRepository {
         LocalDB.DB_WRITE_EXECUTOR.execute(mUserDao::delete);
     }
 
-    public Integer numOfRec()
-    {
-        return mUserDao.numOfRec();
-    }
+
 }

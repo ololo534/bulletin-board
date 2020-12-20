@@ -9,7 +9,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-
 import mail.technopark.bulletin_board.local_database.entity.User;
 
 @Dao
@@ -28,10 +27,10 @@ public interface UserDao {
     LiveData<User> getUserByEmail(String email);
 
     @Query("SELECT * from user_table")
-    User getUser();
+    LiveData<User> getUser();
 
     @Query("SELECT count(*) from user_table")
-    Integer numOfRec();
+    LiveData<Integer> numOfRec();
 
 
 

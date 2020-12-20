@@ -3,22 +3,22 @@ package mail.technopark.bulletin_board.local_database.view_model;
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
-
+import androidx.lifecycle.LiveData;
 
 import mail.technopark.bulletin_board.local_database.entity.User;
 import mail.technopark.bulletin_board.local_database.repository.UserRepository;
 
 public class UserViewModel extends AndroidViewModel {
     private final UserRepository mRepository;
-    private final User mUser;
+    private final LiveData<User> mUser;
 
-    public UserViewModel(Application application) {
+    public UserViewModel(Application application)  {
         super(application);
         mRepository = new UserRepository(application);
         mUser = mRepository.getUser();
     }
 
-   public User getUser() {
+   public LiveData<User> getUser() {
         return mUser;
     }
 
@@ -29,11 +29,6 @@ public class UserViewModel extends AndroidViewModel {
     public void delete()
     {
         mRepository.delete();
-    }
-
-    public Integer numOfRec()
-    {
-        return mRepository.numOfRec();
     }
 
 

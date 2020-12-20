@@ -10,10 +10,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BulletinBoard"
         android:fullBackupContent="@xml/backup_descriptor">
+<!--    Поставил android:theme="@style/SplashTheme" вместо android:theme="@style/Theme.BulletinBoard" для заставки -->
         <activity
-            android:name="mail.technopark.bulletinBoard.activities.MainActivity">
+            android:name="mail.technopark.bulletinBoard.activities.MainActivity"
+            android:theme="@style/SplashTheme">
 <!--        удален аттрибут noHistory, зачем он был создан, никто не помнит    -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

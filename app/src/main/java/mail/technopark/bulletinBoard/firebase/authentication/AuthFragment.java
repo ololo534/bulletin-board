@@ -31,11 +31,15 @@ public class AuthFragment extends Fragment {
         helper = new FirebaseHelper(getParentFragmentManager(), getActivity());
         mUserViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
-        if (mUserViewModel.numOfRec()!=0)
-        {
-            helper.auth(mUserViewModel.getUser().getEmail(), mUserViewModel.getUser().getPassword());
-        }
-    }
+        mUserViewModel.getUser().observe(this, user -> {
+            if(mUserViewModel.getUser().getValue()!=null)
+            {
+                String email = user.getEmail();
+                String password = user.getPassword();
+                helper.auth(email,password);
+            }
+        });
+}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,8 +58,8 @@ public class AuthFragment extends Fragment {
 
         enterBtn.setOnClickListener(v -> {
             User user = new User(loginEt.getText().toString(), passwordEt.getText().toString());
-            mUserViewModel.insert(user);
             helper.auth(loginEt.getText().toString(), passwordEt.getText().toString());
+            mUserViewModel.insert(user);
         });
 
         restoreTv.setOnClickListener(v -> { // Restore password using DialogBox

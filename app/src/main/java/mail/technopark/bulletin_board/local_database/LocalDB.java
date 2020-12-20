@@ -2,7 +2,6 @@ package mail.technopark.bulletin_board.local_database;
 
 import android.content.Context;
 
-
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -40,9 +39,8 @@ public abstract class LocalDB extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             LocalDB.class, "local_database")
-                            .allowMainThreadQueries()
-                            .addCallback(ROOM_DB_CALLBACK)
-                            .addCallback(ROOM_DB_CALLBACK_2)
+                            .addCallback(ROOM_DB_CALLBACK_CREATE)
+                            .addCallback(ROOM_DB_CALLBACK_OPEN)
                             .build();
                 }
             }
@@ -50,14 +48,13 @@ public abstract class LocalDB extends RoomDatabase {
         return INSTANCE;
     }
 
-    private static final RoomDatabase.Callback ROOM_DB_CALLBACK = new RoomDatabase.Callback() {
+    private static final RoomDatabase.Callback ROOM_DB_CALLBACK_CREATE = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
 
             DB_WRITE_EXECUTOR.execute(() -> {
 
-                        UserDao userDao = INSTANCE.userDao();
                         SettingsDao settingsDao = INSTANCE.settingsDao();
 
                         Settings setting = new Settings(0, "is_phone_visible", "false");
@@ -69,14 +66,12 @@ public abstract class LocalDB extends RoomDatabase {
                         setting = new Settings(3, "language", "ru");
                         settingsDao.insert(setting);
 
-                        // TextMessagesDao textMessagesDao = INSTANCE.textMessagesDao();
-
                     }
             );
         }
     };
 
-    private static final RoomDatabase.Callback ROOM_DB_CALLBACK_2 = new RoomDatabase.Callback() {
+    private static final RoomDatabase.Callback ROOM_DB_CALLBACK_OPEN = new RoomDatabase.Callback() {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
@@ -87,6 +82,5 @@ public abstract class LocalDB extends RoomDatabase {
             );
         }
     };
-
 
 }
