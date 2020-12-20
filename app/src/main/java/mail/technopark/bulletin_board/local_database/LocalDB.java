@@ -82,5 +82,4 @@ public abstract class LocalDB extends RoomDatabase {
             );
         }
     };
-
 }
