@@ -44,8 +44,6 @@ public class FirebaseHelper { // Class for Firebase methods
         return mStore;
     }
 
-    public FirebaseStorage getStorage() { return mCloud; }
-
     public void auth(String login, String password){ // Auth method
         if (login.isEmpty() || password.isEmpty()) Toast.makeText(context, "Введите логин и пароль", Toast.LENGTH_SHORT).show();
         else mAuth.signInWithEmailAndPassword(login, password).addOnCompleteListener(task -> {

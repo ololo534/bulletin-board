@@ -129,7 +129,8 @@
                         android:id="@+id/bulletin_photo"
                         android:background="@color/blue_100"
                         android:layout_width="100pt"
-                        android:layout_height="100pt"/>
+                        android:layout_height="100pt"
+                        android:contentDescription="@string/photo_from_gallery" />
 
                     <Button
                         android:id="@+id/create_bulletin_btn_save"

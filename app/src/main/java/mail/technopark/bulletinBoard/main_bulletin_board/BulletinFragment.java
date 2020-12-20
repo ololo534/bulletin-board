@@ -2,15 +2,15 @@ package mail.technopark.bulletinBoard.main_bulletin_board;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
+import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ import mail.technopark.bulletinBoard.firebase.bulletin.CreateBulletinFragment;
 public class BulletinFragment extends Fragment {
     private FirebaseHelper helper;
     private final ArrayList<Bulletin> bulletins = new ArrayList<>();
+    private EditText editText;
     //private String userName;
 
     public static BulletinFragment newInstance(){
@@ -55,25 +56,62 @@ public class BulletinFragment extends Fragment {
                 .replace(R.id.container, CreateBulletinFragment.newInstance(), "CreateBulletinFragment")
                 .addToBackStack(CreateBulletinFragment.class.getSimpleName())
                 .commit());
+
+        editText = view.findViewById(R.id.ad_search);
+        editText.setOnKeyListener((v, keyCode, event) -> {
+            // If the event is a key-down event on the "enter" button
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                // Perform action on key press
+                setRecyclerView(view, editText.getText().toString());
+                return true;
+            }
+            return false;
+        });
         // Getting ads.
-        helper.getFirestore().collection("bulletins")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        bulletins.clear();
-                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                            Bulletin bulletin = document.toObject(Bulletin.class);
-                            bulletin.setBulletinId(document.getId());
-                            bulletins.add(bulletin);
-                        }
-                        RecyclerView recyclerView = view.findViewById(R.id.rv);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-                        RVAdapter adapter = new RVAdapter(bulletins);
-                        recyclerView.setAdapter(adapter);
-                    } else {
-                        Log.d("TAG", "Error on reading docs");
-                    }
-                });
+        setRecyclerView(view, editText.getText().toString());
         return view;
+    }
+
+    private void setRecyclerView(View view, String text) {
+        if (text.isEmpty()) {
+            helper.getFirestore().collection("bulletins")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            bulletins.clear();
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                Bulletin bulletin = document.toObject(Bulletin.class);
+                                bulletin.setBulletinId(document.getId());
+                                bulletins.add(bulletin);
+                            }
+                            RecyclerView recyclerView = view.findViewById(R.id.rv);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                            RVAdapter adapter = new RVAdapter(bulletins);
+                            recyclerView.setAdapter(adapter);
+                        } else {
+                            Log.d("TAG", "Error on reading docs");
+                        }
+                    });
+        } else {
+            helper.getFirestore().collection("bulletins")
+                    .whereEqualTo("name", text.trim())
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            bulletins.clear();
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                Bulletin bulletin = document.toObject(Bulletin.class);
+                                bulletin.setBulletinId(document.getId());
+                                bulletins.add(bulletin);
+                            }
+                            RecyclerView recyclerView = view.findViewById(R.id.rv);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                            RVAdapter adapter = new RVAdapter(bulletins);
+                            recyclerView.setAdapter(adapter);
+                        } else {
+                            Log.d("TAG", "Error on reading docs");
+                        }
+                    });
+        }
     }
 }
