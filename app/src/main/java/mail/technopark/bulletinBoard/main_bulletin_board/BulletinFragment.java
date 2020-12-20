@@ -7,20 +7,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 import mail.technopark.bulletinBoard.R;
+import mail.technopark.bulletinBoard.activities.MainActivity;
 import mail.technopark.bulletinBoard.firebase.Bulletin;
 import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
 import mail.technopark.bulletinBoard.firebase.PhotoSupport;
-import mail.technopark.bulletinBoard.firebase.bulletin.CreateBulletinFragment;
 
 public class BulletinFragment extends Fragment {
     private FirebaseHelper helper;
@@ -49,13 +53,6 @@ public class BulletinFragment extends Fragment {
                 getParentFragmentManager().popBackStack("AuthFragment", 0);
             }
         });
-        // Create bulletin
-        Button createBul = view.findViewById(R.id.create_bul_btn);
-        createBul.setOnClickListener(v -> getParentFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, CreateBulletinFragment.newInstance(), "CreateBulletinFragment")
-                .addToBackStack(CreateBulletinFragment.class.getSimpleName())
-                .commit());
 
         editText = view.findViewById(R.id.ad_search);
         editText.setOnKeyListener((v, keyCode, event) -> {
@@ -113,5 +110,10 @@ public class BulletinFragment extends Fragment {
                         }
                     });
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        ((MainActivity)getActivity()).setBottomAppBarShow();
     }
 }

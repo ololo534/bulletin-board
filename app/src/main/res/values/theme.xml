@@ -21,6 +21,8 @@
         <item name="android:statusBarColor">@color/blue_50_alpha_060</item>
         <item name="android:navigationBarColor">@color/nav_bar</item>
 
+        <item name="bottomAppBarStyle">@style/Widget.MaterialComponents.BottomAppBar.PrimarySurface</item>
+
         <item name="android:windowBackground">?android:colorBackground</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
 

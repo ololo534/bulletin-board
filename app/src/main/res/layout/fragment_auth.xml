@@ -111,7 +111,7 @@
                         android:layout_marginTop="10dp"/>
 
                     <!--    Log in button-->
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/enter_btn"
                         style="@style/loginButton"
                         android:text="@string/enter"

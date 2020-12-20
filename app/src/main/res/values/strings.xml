@@ -15,6 +15,10 @@
     <string name="filter">Filter</string>
     <string name="back">Back</string>
     <string name="search">Search</string>
+    <string name="create_new_bulletin">create_new_bulletin</string>
+    <string name="home">Home</string>
+    <string name="like">Like</string>
+    <string name="profile">Profile</string>
     <string name="create_bulletin">Create Bulletin</string>
     <string name="bulletin_name">Bulletin Name</string>
     <string name="bulletin_description">Bulletin Description</string>
