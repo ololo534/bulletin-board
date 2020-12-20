@@ -5,19 +5,19 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
-import android.provider.MediaStore;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import java.io.IOException;
-
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.IOException;
 
 import mail.technopark.bulletinBoard.R;
 import mail.technopark.bulletinBoard.firebase.authentication.AuthFragment;
@@ -25,8 +25,10 @@ import mail.technopark.bulletinBoard.firebase.bulletin.CreateBulletinFragment;
 import mail.technopark.bulletinBoard.main_bulletin_board.BulletinFragment;
 
 public class MainActivity extends AppCompatActivity {
-    public static Bitmap bulletin_bitmap = null;
 
+    //Утечки памяти на фрагментах авторизации и создании объявления
+
+    public static Bitmap bulletin_bitmap = null;
     BottomAppBar bottomAppBar;
     FloatingActionButton fab;
 

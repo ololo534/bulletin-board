@@ -28,7 +28,7 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/create_new_bulletin"
+        android:contentDescription="@string/create_bulletin"
         app:layout_anchor="@id/bottomAppBar"
         app:srcCompat="@drawable/ic_new" />
 
