@@ -43,6 +43,7 @@ public class CreateBulletinFragment extends Fragment {
                 Button saveButton = view.findViewById(R.id.create_bulletin_btn_save);
                 saveButton.setOnClickListener(v -> {
                     // Get Bulletin's Data
+                    assert user != null;
                     String userName = user.getName();
                     boolean userVisibility = user.getNameVisible();
                     String name = ((EditText) view.findViewById(R.id.bulletin_name))

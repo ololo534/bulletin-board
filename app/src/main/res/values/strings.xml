@@ -15,4 +15,8 @@
     <string name="filter">Filter</string>
     <string name="back">Back</string>
     <string name="search">Search</string>
+    <string name="create_new_bulletin">create_new_bulletin</string>
+    <string name="home">Home</string>
+    <string name="like">Like</string>
+    <string name="profile">Profile</string>
 </resources>
