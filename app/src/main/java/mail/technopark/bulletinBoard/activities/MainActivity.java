@@ -1,14 +1,24 @@
 package mail.technopark.bulletinBoard.activities;
 
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import java.io.IOException;
+
 import mail.technopark.bulletinBoard.firebase.authentication.AuthFragment;
 import mail.technopark.bulletinBoard.R;
+import mail.technopark.bulletinBoard.firebase.bulletin.CreateBulletinFragment;
 
 public class MainActivity extends AppCompatActivity {
+    public static Bitmap bulletin_bitmap = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,5 +46,20 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK)
+            if (requestCode == 65537) {
+                Uri selectedImage = data.getData();
+                try {
+                    bulletin_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                    ((CreateBulletinFragment) getSupportFragmentManager().findFragmentByTag("CreateBulletinFragment")).SetSelectedPhoto(bulletin_bitmap);
+                } catch (IOException e) {
+                    Log.i("TAG", "Some exception " + e);
+                }
+            }
     }
 }

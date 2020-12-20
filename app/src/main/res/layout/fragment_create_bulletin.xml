@@ -70,7 +70,7 @@
                             android:id="@+id/bulletin_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Bulletin Name"
+                            android:hint="@string/bulletin_name"
                             android:inputType="text"
                             android:maxLines="1"
                             android:importantForAutofill="no" />
@@ -86,7 +86,7 @@
                             android:id="@+id/bulletin_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Bulletin Description"
+                            android:hint="@string/bulletin_description"
                             android:inputType="text"
                             android:maxLines="1"
                             android:importantForAutofill="no" />
@@ -102,7 +102,7 @@
                             android:id="@+id/bulletin_price"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Bulletin Price"
+                            android:hint="@string/bulletin_price"
                             android:inputType="textEmailAddress"
                             android:maxLines="1"
                             android:importantForAutofill="no" />
@@ -118,19 +118,25 @@
                             android:id="@+id/bulletin_type"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="bulletin_type"
+                            android:hint="@string/bulletin_type"
                             android:inputType="phone"
                             android:maxLines="1"
                             android:importantForAutofill="no" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <ImageView
+                        android:layout_margin="20dp"
+                        android:id="@+id/bulletin_photo"
+                        android:background="@color/blue_100"
+                        android:layout_width="100pt"
+                        android:layout_height="100pt"/>
 
                     <Button
                         android:id="@+id/create_bulletin_btn_save"
                         style="@style/loginButton"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:text="Завершить"/>
+                        android:text="@string/finish"/>
                 </LinearLayout>
             </LinearLayout>
 

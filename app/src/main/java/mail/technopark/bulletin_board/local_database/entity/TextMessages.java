@@ -9,7 +9,6 @@ import androidx.room.PrimaryKey;
 public class TextMessages {
 
     @PrimaryKey(autoGenerate = true)
-    @NonNull
     @ColumnInfo(name = "text_message_id")
     private long id;
 

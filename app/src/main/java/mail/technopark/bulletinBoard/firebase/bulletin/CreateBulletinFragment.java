@@ -1,11 +1,15 @@
 package mail.technopark.bulletinBoard.firebase.bulletin;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
@@ -17,6 +21,7 @@ import mail.technopark.bulletinBoard.firebase.User;
 
 public class CreateBulletinFragment extends Fragment {
     FirebaseHelper helper;
+    ImageView imageView;
 
     public static CreateBulletinFragment newInstance(){
         return new CreateBulletinFragment();
@@ -32,6 +37,8 @@ public class CreateBulletinFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_create_bulletin, container, false);
 
+        imageView = view.findViewById(R.id.bulletin_photo);
+        imageView.setOnClickListener(v -> getImageFromAlbum());
         if (helper.getAuth().getCurrentUser() != null) {
             String userId = helper.getAuth().getCurrentUser().getUid();
             DocumentReference docRef = helper.getFirestore().collection("users")
@@ -53,10 +60,24 @@ public class CreateBulletinFragment extends Fragment {
                             .getText().toString();
                     String type = ((EditText) view.findViewById(R.id.bulletin_type))
                             .getText().toString();
-                    helper.createBulletin(userName, userVisibility, name, description, price, type);
+                    helper.createBulletin(userName, userVisibility, name, description, price, type, userId);
                 });
             });
         }
         return view;
+    }
+
+    private void getImageFromAlbum(){
+        try {
+            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            photoPickerIntent.setType("image/*");
+            startActivityForResult(photoPickerIntent, 1);
+        } catch(Exception exp){
+            Log.i("Error", exp.toString());
+        }
+    }
+
+    public void SetSelectedPhoto(Bitmap bitmap) {
+        imageView.setImageBitmap(bitmap);
     }
 }

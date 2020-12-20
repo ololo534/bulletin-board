@@ -9,7 +9,6 @@ import androidx.room.PrimaryKey;
 public class Settings {
 
     @PrimaryKey
-    @NonNull
     @ColumnInfo(name = "setting_id")
     private long id;
 
