@@ -141,4 +141,11 @@ public class FirebaseHelper { // Class for Firebase methods
         mCloud.getReference("bulletins/" + name.toLowerCase() + ".jpg").getBytes(limit)
                 .addOnSuccessListener(bytes -> imageView.setImageBitmap(photoSupport.getPhoto(bytes))).addOnFailureListener(e -> Log.e("GETBULLETINPHOTO", "error", e));
     }
+
+    public void deleteBulletin(String bulletinId) {
+        mStore.collection("bulletins").document(bulletinId)
+                .delete()
+                .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully deleted!"))
+                .addOnFailureListener(e -> Log.w("TAG", "Error deleting document", e));
+    }
 }

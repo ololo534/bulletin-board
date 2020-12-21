@@ -24,6 +24,7 @@ import mail.technopark.bulletinBoard.R;
 import mail.technopark.bulletinBoard.firebase.authentication.AuthFragment;
 import mail.technopark.bulletinBoard.firebase.bulletin.CreateBulletinFragment;
 import mail.technopark.bulletinBoard.main_bulletin_board.BulletinFragment;
+import mail.technopark.bulletinBoard.main_bulletin_board.PersonalBulletinFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,8 +71,13 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Liked clicked.", Toast.LENGTH_SHORT).show();
                     break;
                 case (R.id.profile):
+                    //Toast.makeText(MainActivity.this, "Profile clicked.", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.container, PersonalBulletinFragment.newInstance())
+                            .addToBackStack(PersonalBulletinFragment.class.getSimpleName())
+                            .commit();
                     setBottomAppBarShow();
-                    Toast.makeText(MainActivity.this, "Profile clicked.", Toast.LENGTH_SHORT).show();
                     break;
             }
             return false;
