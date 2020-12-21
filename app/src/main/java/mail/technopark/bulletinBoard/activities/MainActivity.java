@@ -59,9 +59,10 @@ public class MainActivity extends AppCompatActivity {
         bottomAppBar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case (R.id.home):
+                    if (goToNeedFragment("BulletinFragment"))
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.container, BulletinFragment.newInstance())
+                            .replace(R.id.container, BulletinFragment.newInstance(), "BulletinFragment")
                             .addToBackStack(BulletinFragment.class.getSimpleName())
                             .commit();
                     setBottomAppBarShow();
@@ -71,10 +72,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Liked clicked.", Toast.LENGTH_SHORT).show();
                     break;
                 case (R.id.profile):
-                    //Toast.makeText(MainActivity.this, "Profile clicked.", Toast.LENGTH_SHORT).show();
+                    if (goToNeedFragment("PersonalBulletinFragment"))
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.container, PersonalBulletinFragment.newInstance())
+                            .replace(R.id.container, PersonalBulletinFragment.newInstance(), "PersonalBulletinFragment")
                             .addToBackStack(PersonalBulletinFragment.class.getSimpleName())
                             .commit();
                     setBottomAppBarShow();
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
         fab.setOnClickListener(view -> {
+            if (goToNeedFragment("CreateBulletinFragment"))
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.container, CreateBulletinFragment.newInstance(), "CreateBulletinFragment")
@@ -138,5 +140,33 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("TAG", "Some exception " + e);
                 }
             }
+    }
+
+    private boolean goToNeedFragment(String tag) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        switch (tag) {
+            case "BulletinFragment":
+                BulletinFragment bulletinFragment = (BulletinFragment) fragmentManager.findFragmentByTag(tag);
+                if (bulletinFragment != null) {
+                    fragmentManager.popBackStack(tag, 0);
+                    return false;
+                }
+                break;
+            case "PersonalBulletinFragment":
+                PersonalBulletinFragment personalBulletinFragment = (PersonalBulletinFragment) fragmentManager.findFragmentByTag(tag);
+                if (personalBulletinFragment != null) {
+                    fragmentManager.popBackStack(tag, 0);
+                    return false;
+                }
+                break;
+            case "CreateBulletinFragment":
+                CreateBulletinFragment createBulletinFragment = (CreateBulletinFragment) fragmentManager.findFragmentByTag(tag);
+                if (createBulletinFragment != null) {
+                    fragmentManager.popBackStack(tag, 0);
+                    return false;
+                }
+                break;
+        }
+        return true;
     }
 }

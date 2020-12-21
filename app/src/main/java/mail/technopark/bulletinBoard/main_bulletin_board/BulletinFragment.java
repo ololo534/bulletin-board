@@ -6,12 +6,10 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.widget.EditText;
-
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -51,15 +49,6 @@ public class BulletinFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bulletin, container, false);
-        Button logoutBtn = view.findViewById(R.id.logout_btn);
-        logoutBtn.setOnClickListener(v -> {
-            if (helper.getAuth().getCurrentUser() != null) {
-                helper.getAuth().signOut();
-                mUserViewModel.delete();
-                getParentFragmentManager().popBackStack("AuthFragment", 0);
-            }
-        });
-
         editText = view.findViewById(R.id.ad_search);
         editText.setOnKeyListener((v, keyCode, event) -> {
             // If the event is a key-down event on the "enter" button

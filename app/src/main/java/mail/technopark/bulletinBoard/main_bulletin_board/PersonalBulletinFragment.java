@@ -2,7 +2,6 @@ package mail.technopark.bulletinBoard.main_bulletin_board;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +47,7 @@ public class PersonalBulletinFragment extends Fragment implements RVAdapterClick
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bulletin, container, false);
+        View view = inflater.inflate(R.layout.fragment_personal_bulletin, container, false);
         Button logoutBtn = view.findViewById(R.id.logout_btn);
         logoutBtn.setOnClickListener(v -> {
             if (helper.getAuth().getCurrentUser() != null) {
@@ -58,18 +57,18 @@ public class PersonalBulletinFragment extends Fragment implements RVAdapterClick
             }
         });
 
-        editText = view.findViewById(R.id.ad_search);
-        editText.setOnKeyListener((v, keyCode, event) -> {
-            // If the event is a key-down event on the "enter" button
-            if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                // Perform action on key press
-                setRecyclerView(view, editText.getText().toString());
-                return true;
-            }
-            return false;
-        });
+//        editText = view.findViewById(R.id.ad_search);
+//        editText.setOnKeyListener((v, keyCode, event) -> {
+//            // If the event is a key-down event on the "enter" button
+//            if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+//                // Perform action on key press
+//                setRecyclerView(view, editText.getText().toString());
+//                return true;
+//            }
+//            return false;
+//        });
         // Getting ads.
-        setRecyclerView(view, editText.getText().toString());
+        setRecyclerView(view, "");
         return view;
     }
 
@@ -89,7 +88,7 @@ public class PersonalBulletinFragment extends Fragment implements RVAdapterClick
                             if (bulletin.getUserId().equals(user))
                                 bulletins.add(bulletin);
                         }
-                        RecyclerView recyclerView = view.findViewById(R.id.rv);
+                        RecyclerView recyclerView = view.findViewById(R.id.rv_personal);
                         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
                         RVAdapterClickable adapter = new RVAdapterClickable(bulletins, PersonalBulletinFragment.this);
                         recyclerView.setAdapter(adapter);
@@ -109,7 +108,7 @@ public class PersonalBulletinFragment extends Fragment implements RVAdapterClick
                             if (bulletin.getUserId().equals(user))
                                 bulletins.add(bulletin);
                         }
-                        RecyclerView recyclerView = view.findViewById(R.id.rv);
+                        RecyclerView recyclerView = view.findViewById(R.id.rv_personal);
                         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
                         RVAdapterClickable adapter = new RVAdapterClickable(bulletins, PersonalBulletinFragment.this);
                         recyclerView.setAdapter(adapter);

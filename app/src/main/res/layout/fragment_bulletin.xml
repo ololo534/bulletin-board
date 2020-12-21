@@ -7,18 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".main_bulletin_board.BulletinFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/logout_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/logout"
-            android:textSize="20sp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -56,7 +44,6 @@
                     app:strokeWidth="@dimen/plane_00" />
 
             </LinearLayout>
-
             <EditText
                 android:id="@+id/ad_search"
                 android:layout_width="match_parent"
@@ -75,5 +62,4 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         </LinearLayout>
-    </LinearLayout>
 </FrameLayout>

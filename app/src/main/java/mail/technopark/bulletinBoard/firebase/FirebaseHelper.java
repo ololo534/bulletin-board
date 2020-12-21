@@ -5,11 +5,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -101,7 +98,7 @@ public class FirebaseHelper { // Class for Firebase methods
     public void goToBulletinFragment(){
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.container, BulletinFragment.newInstance())
+                .replace(R.id.container, BulletinFragment.newInstance(), "BulletinFragment")
                 .addToBackStack(BulletinFragment.class.getSimpleName())
                 .commitAllowingStateLoss();
     }
