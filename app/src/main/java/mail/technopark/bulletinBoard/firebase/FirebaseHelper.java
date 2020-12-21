@@ -4,11 +4,17 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Date;
 import java.util.Objects;
@@ -127,6 +133,7 @@ public class FirebaseHelper { // Class for Firebase methods
         bulletin.setUserId(id);
 
         String bulletinId = mStore.collection("bulletins").document().getId();
+
         mStore.collection("bulletins").document(bulletinId)
                 .set(bulletin)
                 .addOnSuccessListener(aVoid -> Toast.makeText(context, "Объявление создано успешно", Toast.LENGTH_SHORT).show())
@@ -147,5 +154,8 @@ public class FirebaseHelper { // Class for Firebase methods
                 .delete()
                 .addOnSuccessListener(aVoid -> Log.d("TAG", "DocumentSnapshot successfully deleted!"))
                 .addOnFailureListener(e -> Log.w("TAG", "Error deleting document", e));
+        StorageReference storageRef = mCloud.getReference();
+        StorageReference desertRef = storageRef.child("bulletins/" + bulletinId.toLowerCase() + ".jpg");
+        desertRef.delete().addOnSuccessListener(aVoid -> Toast.makeText(context, "Объявление успешно удалено", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Log.e("ERROR", "Ошибка при удалении изображения"));
     }
 }

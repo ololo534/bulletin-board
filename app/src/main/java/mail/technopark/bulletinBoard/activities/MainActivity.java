@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.container, CreateBulletinFragment.newInstance())
+                    .replace(R.id.container, CreateBulletinFragment.newInstance(), "CreateBulletinFragment")
                     .addToBackStack(CreateBulletinFragment.class.getSimpleName())
                     .commit();
             setBottomAppBarHide();
