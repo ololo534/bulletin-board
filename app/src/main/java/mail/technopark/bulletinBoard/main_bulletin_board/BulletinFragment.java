@@ -11,7 +11,9 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.widget.EditText;
+
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,11 +27,13 @@ import mail.technopark.bulletinBoard.activities.MainActivity;
 import mail.technopark.bulletinBoard.firebase.Bulletin;
 import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
 import mail.technopark.bulletinBoard.firebase.PhotoSupport;
+import mail.technopark.bulletin_board.local_database.view_model.UserViewModel;
 
 public class BulletinFragment extends Fragment {
     private FirebaseHelper helper;
     private final ArrayList<Bulletin> bulletins = new ArrayList<>();
     private EditText editText;
+    private UserViewModel mUserViewModel;
     //private String userName;
 
     public static BulletinFragment newInstance(){
@@ -41,6 +45,7 @@ public class BulletinFragment extends Fragment {
         super.onCreate(savedInstanceState);
         helper = new FirebaseHelper(getParentFragmentManager(), getActivity());
         PhotoSupport photoSupport = new PhotoSupport();
+        mUserViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 
     @Override
@@ -50,6 +55,7 @@ public class BulletinFragment extends Fragment {
         logoutBtn.setOnClickListener(v -> {
             if (helper.getAuth().getCurrentUser() != null) {
                 helper.getAuth().signOut();
+                mUserViewModel.delete();
                 getParentFragmentManager().popBackStack("AuthFragment", 0);
             }
         });
