@@ -2,12 +2,10 @@ package mail.technopark.bulletinBoard.main_bulletin_board;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import mail.technopark.bulletinBoard.R;
 import mail.technopark.bulletinBoard.activities.MainActivity;
@@ -30,9 +29,7 @@ import mail.technopark.bulletin_board.local_database.view_model.UserViewModel;
 public class PersonalBulletinFragment extends Fragment implements RVAdapterClickable.BulListener {
     private FirebaseHelper helper;
     private final ArrayList<Bulletin> bulletins = new ArrayList<>();
-    private EditText editText;
     private UserViewModel mUserViewModel;
-    //private String userName;
 
     public static PersonalBulletinFragment newInstance(){
         return new PersonalBulletinFragment();
@@ -48,7 +45,7 @@ public class PersonalBulletinFragment extends Fragment implements RVAdapterClick
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bulletin, container, false);
+        View view = inflater.inflate(R.layout.fragment_personal_bulletin, container, false);
         Button logoutBtn = view.findViewById(R.id.logout_btn);
         logoutBtn.setOnClickListener(v -> {
             if (helper.getAuth().getCurrentUser() != null) {
@@ -57,64 +54,31 @@ public class PersonalBulletinFragment extends Fragment implements RVAdapterClick
                 getParentFragmentManager().popBackStack("AuthFragment", 0);
             }
         });
-
-        editText = view.findViewById(R.id.ad_search);
-        editText.setOnKeyListener((v, keyCode, event) -> {
-            // If the event is a key-down event on the "enter" button
-            if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                // Perform action on key press
-                setRecyclerView(view, editText.getText().toString());
-                return true;
-            }
-            return false;
-        });
-        // Getting ads.
-        setRecyclerView(view, editText.getText().toString());
+        setRecyclerView(view);
         return view;
     }
 
-    private void setRecyclerView(View view, String text) {
+    private void setRecyclerView(View view) {
         String user = helper.getAuth().getUid();
-        if (text.isEmpty()) {
-            helper.getFirestore().collection("bulletins")
-                    .addSnapshotListener((value, error) -> {
-                        if (error != null) {
-                            Log.w("MYTAG", "Listen failed.", error);
-                            return;
-                        }
+        helper.getFirestore().collection("bulletins")
+                .whereEqualTo("userId", user)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
                         bulletins.clear();
-                        for (QueryDocumentSnapshot doc : value) {
-                            Bulletin bulletin = doc.toObject(Bulletin.class);
-                            bulletin.setBulletinId(doc.getId());
-                            if (bulletin.getUserId().equals(user))
-                                bulletins.add(bulletin);
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            Bulletin bulletin = document.toObject(Bulletin.class);
+                            bulletin.setBulletinId(document.getId());
+                            bulletins.add(bulletin);
                         }
-                        RecyclerView recyclerView = view.findViewById(R.id.rv);
+                        RecyclerView recyclerView = view.findViewById(R.id.rv_personal);
                         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                        RVAdapterClickable adapter = new RVAdapterClickable(bulletins, PersonalBulletinFragment.this);
+                        RVAdapter adapter = new RVAdapter(bulletins);
                         recyclerView.setAdapter(adapter);
-                    });
-        } else {
-            helper.getFirestore().collection("bulletins")
-                    .whereEqualTo("name", text.trim())
-                    .addSnapshotListener((value, error) -> {
-                        if (error != null) {
-                            Log.w("MYTAG", "Listen failed.", error);
-                            return;
-                        }
-                        bulletins.clear();
-                        for (QueryDocumentSnapshot doc : value) {
-                            Bulletin bulletin = doc.toObject(Bulletin.class);
-                            bulletin.setBulletinId(doc.getId());
-                            if (bulletin.getUserId().equals(user))
-                                bulletins.add(bulletin);
-                        }
-                        RecyclerView recyclerView = view.findViewById(R.id.rv);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                        RVAdapterClickable adapter = new RVAdapterClickable(bulletins, PersonalBulletinFragment.this);
-                        recyclerView.setAdapter(adapter);
-                    });
-        }
+                    } else {
+                        Log.d("TAG", "Error on reading docs");
+                    }
+                });
     }
 
     @Override

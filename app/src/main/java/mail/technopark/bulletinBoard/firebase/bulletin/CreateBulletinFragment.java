@@ -39,6 +39,7 @@ public class CreateBulletinFragment extends Fragment {
 
         imageView = view.findViewById(R.id.bulletin_photo);
         imageView.setOnClickListener(v -> getImageFromAlbum());
+
         if (helper.getAuth().getCurrentUser() != null) {
             String userId = helper.getAuth().getCurrentUser().getUid();
             DocumentReference docRef = helper.getFirestore().collection("users")
@@ -50,6 +51,7 @@ public class CreateBulletinFragment extends Fragment {
                 Button saveButton = view.findViewById(R.id.create_bulletin_btn_save);
                 saveButton.setOnClickListener(v -> {
                     // Get Bulletin's Data
+                    Log.d("BUTTON", "SUCCESS");
                     assert user != null;
                     String userName = user.getName();
                     boolean userVisibility = user.getNameVisible();
@@ -61,9 +63,13 @@ public class CreateBulletinFragment extends Fragment {
                             .getText().toString();
                     String type = ((EditText) view.findViewById(R.id.bulletin_type))
                             .getText().toString();
+
                     helper.createBulletin(userName, userVisibility, name, description, price, type, userId);
                 });
             });
+        }
+        else {
+            Log.d("IMAGE", "FAILED");
         }
         return view;
     }

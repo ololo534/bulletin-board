@@ -25,4 +25,5 @@
     <string name="bulletin_type">bulletin_type</string>
     <string name="finish">Завершить</string>
     <string name="photo_from_gallery">Photo from gallery</string>
+    <string name="personal_bulletins">Ваши объявления</string>
 </resources>

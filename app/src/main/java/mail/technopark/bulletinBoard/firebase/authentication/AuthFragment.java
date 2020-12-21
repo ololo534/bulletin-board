@@ -55,7 +55,7 @@ public class AuthFragment extends Fragment {
 
         registerBtn.setOnClickListener(v -> getParentFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, RegisterFragment.newInstance())
+                .replace(R.id.container, RegisterFragment.newInstance(), "RegisterFragment")
                 .addToBackStack(RegisterFragment.class.getSimpleName())
                 .commit());
 
