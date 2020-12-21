@@ -12,9 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import java.io.IOException;
+import java.util.Objects;
 
-import mail.technopark.bulletinBoard.firebase.authentication.AuthFragment;
 import mail.technopark.bulletinBoard.R;
+import mail.technopark.bulletinBoard.firebase.authentication.AuthFragment;
 import mail.technopark.bulletinBoard.firebase.bulletin.CreateBulletinFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 Uri selectedImage = data.getData();
                 try {
                     bulletin_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
-                    ((CreateBulletinFragment) getSupportFragmentManager().findFragmentByTag("CreateBulletinFragment")).SetSelectedPhoto(bulletin_bitmap);
+                    ((CreateBulletinFragment) Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("CreateBulletinFragment"))).SetSelectedPhoto(bulletin_bitmap);
                 } catch (IOException e) {
                     Log.i("TAG", "Some exception " + e);
                 }
