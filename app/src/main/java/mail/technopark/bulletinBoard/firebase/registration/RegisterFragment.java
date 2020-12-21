@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import mail.technopark.bulletinBoard.R;
+import mail.technopark.bulletinBoard.activities.MainActivity;
 import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
 import mail.technopark.bulletin_board.local_database.entity.User;
 import mail.technopark.bulletin_board.local_database.view_model.UserViewModel;
@@ -46,5 +49,10 @@ public class RegisterFragment extends Fragment {
             mUserViewModel.insert(user);
         });
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        ((MainActivity)getActivity()).setBottomAppBarHide();
     }
 }

@@ -9,10 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import mail.technopark.bulletinBoard.R;
+import mail.technopark.bulletinBoard.activities.MainActivity;
 import mail.technopark.bulletinBoard.firebase.FirebaseHelper;
 import mail.technopark.bulletinBoard.firebase.registration.RegisterFragment;
 import mail.technopark.bulletin_board.local_database.entity.User;
@@ -78,5 +81,11 @@ public class AuthFragment extends Fragment {
             resetDialog.create().show();
         });
         return view;
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        ((MainActivity)getActivity()).setBottomAppBarHide();
     }
 }
