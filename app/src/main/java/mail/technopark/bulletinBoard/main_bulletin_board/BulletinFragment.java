@@ -30,9 +30,7 @@ import mail.technopark.bulletin_board.local_database.view_model.UserViewModel;
 public class BulletinFragment extends Fragment {
     private FirebaseHelper helper;
     private final ArrayList<Bulletin> bulletins = new ArrayList<>();
-    private EditText editText;
-    private UserViewModel mUserViewModel;
-    //private String userName;
+//    private String searchText = "";
 
     public static BulletinFragment newInstance(){
         return new BulletinFragment();
@@ -43,13 +41,13 @@ public class BulletinFragment extends Fragment {
         super.onCreate(savedInstanceState);
         helper = new FirebaseHelper(getParentFragmentManager(), getActivity());
         PhotoSupport photoSupport = new PhotoSupport();
-        mUserViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        UserViewModel mUserViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bulletin, container, false);
-        editText = view.findViewById(R.id.ad_search);
+        EditText editText = view.findViewById(R.id.ad_search);
         editText.setOnKeyListener((v, keyCode, event) -> {
             // If the event is a key-down event on the "enter" button
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
